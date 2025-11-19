@@ -10,13 +10,14 @@ namespace ZombieSurvivalGame.Domain
 {
     public class CharacterParts
     {
-        public readonly static int[] Ages = { 15, 26, 41, 60 };
 
         // sundan ang role type
         public readonly static string[] RoleType =
         {
             "Human", "Zombie"
         };
+
+        public readonly static int[] Ages = { 15, 26, 41, 60 };
 
         public readonly static string[] EyeTypes =
         {
@@ -58,7 +59,9 @@ namespace ZombieSurvivalGame.Domain
             "Patchy"
         };
 
-        public readonly static string[] BodyTypeHuman = 
+
+        // body type
+        public readonly static string[] BodyTypeHuman =
         {
             "Skinny",
             "Slim",
@@ -74,25 +77,24 @@ namespace ZombieSurvivalGame.Domain
             "Hunched"
         };
 
+        // skin color
+        public readonly static string[] SkinColorHuman =
+          {
+            "Dark",
+            "Light",
+            "Brown",
+            "Pale",
+            "Tan"
+        };
 
-
-
-        
-
-        public enum SkinColor
+        public readonly static string[] SkinColorZombie =
         {
-            Dark,
-            Light,
-            Brown,
-            Pale,
-            Tan,
+            "Gray",
+            "Green",
+            "Decayed",
+            "Rotting"
+        };
 
-            // Zombie
-            Gray,
-            Green,
-            Decayed,
-            Rotting
-        }
 
         public enum PostureType
         {

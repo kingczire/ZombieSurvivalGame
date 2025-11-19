@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using ZombieSurvivalGame.Domain;
@@ -11,11 +13,10 @@ namespace ZombieSurvivalGame.Utils
 {
     public class ConsoleHelper
     {
-        public Character character;
+        // Removed dependence on an internal Character instance to avoid null refs.
 
-        public ConsoleHelper(Character character)
+        public ConsoleHelper()
         {
-            this.character = character;
         }
 
         public static void AgeOptions()
@@ -31,24 +32,6 @@ namespace ZombieSurvivalGame.Utils
             for (int i = 0; i < CharacterParts.RoleType.Length; i++)
             {
                 Console.WriteLine($"{i + 1}. {CharacterParts.RoleType[i]}");
-            }
-        }
-
-        public void HairStyleOptions()
-        {
-            if (character.Role.Equals("Human"))
-            {
-                for (int i = 0; i < CharacterParts.HairStyleHuman.Length; i++)
-                {
-                    // TODO: Output options for human hair styles
-                }
-            }
-            else
-            {
-                for (int i = 0; i < CharacterParts.HairStyleZombie.Length; i++)
-                {
-                    // TODO: Output options for zombie hair styles
-                }
             }
         }
 
@@ -76,21 +59,32 @@ namespace ZombieSurvivalGame.Utils
             }
         }
 
-        // Has hair part: Y/N
-        public void HasHairOptions()
+        // Use role parameter instead of reading a possibly-null character
+        public void HairStyleOptions(string role)
         {
-            Console.WriteLine("1. Yes");
-            Console.WriteLine("2. No");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.HairStyleHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.HairStyleHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.HairStyleZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.HairStyleZombie[i]}");
+                }
+            }
         }
 
-        public void BodyTypeOptions()
+        public void BodyTypeOptions(string role)
         {
-            if (character.Role.Equals("Human"))
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
             {
                 for (int i = 0; i < CharacterParts.BodyTypeHuman.Length; i++)
                 {
                     Console.WriteLine($"{i + 1}. {CharacterParts.BodyTypeHuman[i]}");
-                    // TODO: Output options for human hair styles
                 }
             }
             else
@@ -98,10 +92,28 @@ namespace ZombieSurvivalGame.Utils
                 for (int i = 0; i < CharacterParts.BodyTypeZombie.Length; i++)
                 {
                     Console.WriteLine($"{i + 1}. {CharacterParts.BodyTypeZombie[i]}");
-                    // TODO: Output options for zombie hair styles
+                }
+            }
+        }
+
+        public void SkinColorOptions(string role)
+        {
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.SkinColorHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.SkinColorHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.SkinColorZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.SkinColorZombie[i]}");
                 }
             }
         }
     }
 }
+
 

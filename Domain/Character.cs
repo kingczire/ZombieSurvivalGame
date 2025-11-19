@@ -19,7 +19,7 @@ namespace ZombieSurvivalGame.Model
         public string HairStyle { get; private set; }
 
         public string Body { get; private set; }
-        public SkinColor Skin { get; private set; }
+        public string Skin { get; private set; }
 
         public PostureType Posture { get; private set; }
 
@@ -39,7 +39,7 @@ namespace ZombieSurvivalGame.Model
             bool hasHair,
             string hairStyle,
             string body,
-            SkinColor skin,
+            string skin,
             PostureType posture,
             ShirtType shirt,
             PantsType pants,
