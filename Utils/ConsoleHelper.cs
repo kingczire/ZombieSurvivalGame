@@ -27,9 +27,10 @@ namespace ZombieSurvivalGame.Utils
         {
             Console.Clear();
             Console.WriteLine("0. Exit");
-            Console.WriteLine("1. Load Game");
-            Console.WriteLine("2. Campaign Mode");
-            Console.WriteLine("3. Credits");
+            Console.WriteLine("1. New Game");
+            Console.WriteLine("2. Load Game");
+            Console.WriteLine("3. Campaign Mode");
+            Console.WriteLine("4. Credits");
         }
 
         public static void AgeOptions()

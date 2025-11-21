@@ -24,7 +24,7 @@ namespace ZombieSurvivalGame.Services
             while (start)
             {
                 // INTRO
-                int menuChoice = GetMenuChoice("Select an option: ", 0, 3);
+                int menuChoice = GetMenuChoice("Select an option: ", 0, 4);
                 switch (menuChoice)
                 {
                     case 0:
@@ -40,8 +40,40 @@ namespace ZombieSurvivalGame.Services
                         characterRepository.SaveCharacter(character);
 
                         character.DisplayCharacterInfo();
-                        return;
+
+                        Console.WriteLine("\nGoing back to the menu...");
+                        Thread.Sleep(3000);
+
+                        break;
                     case 2:
+                        // Load game logic here
+                        ConsoleHelper.TypeEffect("Load Game selected.");
+                        List<Character> characters = characterRepository.LoadCharacters();
+
+                        if (characters.Count == 0)
+                        {
+                            ConsoleHelper.TypeEffect("No saved characters found.");
+                            break;
+                        }
+
+                        ConsoleHelper.TypeEffect("Select a character to load:");
+                        for (int i = 0; i < characters.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {characters[i].Name} - {characters[i].Role}");
+                        }
+
+                        int charChoice = Validator.GetValidNumber("Enter the number of the character to load: ", 1, characters.Count);
+                        Character selectedCharacter = characters[charChoice - 1];
+
+                        ConsoleHelper.TypeEffect($"Character {selectedCharacter.Name} loaded successfully!");
+                        selectedCharacter.DisplayCharacterInfo();
+
+                        // NOTE: After selecting character, proceed to menu again Sleep for now
+                        Console.WriteLine("\nGoing back to the menu...");
+                        Thread.Sleep(3000);
+
+                        break;
+                    case 3:
                         Console.WriteLine("Campaign Mode selected.");
                         // Campaign mode logic here
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -55,10 +87,29 @@ namespace ZombieSurvivalGame.Services
                         ConsoleHelper.TypeEffect("As you get further in you get more tragedies: teammates you have to leave behind to allow others to survive, rescue missions that go terribly astray, and tough decisions that haunt your conscience.");
                         ConsoleHelper.TypeEffect("With all the sacrifice, weariness and uncertainty, you start discovering the real cause of the outbreak- and the staggering fact that you were the very one the virus was targeting at the dawn of time.\r\n");
                         break;
-                    case 3:
+                    case 4:
                         ConsoleHelper.TypeEffect("Credits selected.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        ConsoleHelper.TypeEffect("Czire Haber");
+                        Console.ResetColor();
+                        Console.WriteLine(" - Siya ang leader ng group namin. Siya ang nakaisip ng mga idea na pwedeng ilagay para sa program namin. Nag ayos ng magiging flow ng gagawin laro namin at nag bigay ng mga task saamin upang lahat kami ay may magawa para sa aming program.\nSiya ang nag-aayos ng core systems at sinisigurado na gumagana ang lahat, at kung may problema sa code, siya ang go-to ng buong team. Hindi niya hinahayaan na may mga members na hindi nakakasunod at handa nya itong tulungan agad upang matuto at maayos.");
+                        Thread.Sleep(1500);
+
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        ConsoleHelper.TypeEffect("Cyril Alferez");
+                        Console.ResetColor();
+                        Console.WriteLine(" - Siya ang nagbibigay din ng idea, suggestion para sa aming program. Tinutulungan din niya ang pagbuo ng documentation upang mas malinaw ang flow at implementasyon ng program.\nKilala siya sa kanyang creative thinking sa pagbibigay ng idea at kakayahang magmungkahi ng mga solusyon na nagpadali rin sa development process. Isa siya sa pagiging maasahan at madaling makipag-collaborate sa ibang miyembro ng team.\r");
+                        Thread.Sleep(1500);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        ConsoleHelper.TypeEffect("Jireh Mikael Siojo");
+                        Console.ResetColor();
+                        Console.WriteLine(" - Siya naman ay nagbibigay siya ng mga idea para sa pagpapabuti ng gameplay at mechanics ng laro, at tumutulong sa iba't ibang gawain upang masiguro ang maayos na progreso ng proyekto.\nAng kanyang naibibigay na tulong sa ideya at actual na trabaho ay nakakatulong sa pag aayos ng laro at sa maayos na flow ng trabaho sa program.\r\n");
+
+                        Console.WriteLine("\nGoing back to the menu...");
+                        Thread.Sleep(3000);
                         // Display credits logic here
-                        return;
+                        break;
                 }
             }
             ConsoleHelper.TypeEffect("Thanks for using this program!");
