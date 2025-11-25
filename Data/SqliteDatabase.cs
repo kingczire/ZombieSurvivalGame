@@ -8,6 +8,7 @@ namespace ZombieSurvivalGame.Config
         {
             return new SqliteConnection(DbConfig.ConnectionString);
         }
+
         public void Initialize()
         {
             try
@@ -19,23 +20,35 @@ namespace ZombieSurvivalGame.Config
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = @"
-                            CREATE TABLE IF NOT EXISTS Characters (
-                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            Role TEXT NOT NULL,
-                            Age INTEGER,
-                            EyeType TEXT,
-                            NoseType TEXT,
-                            MouthType TEXT,
-                            HasHair INTEGER,
-                            HairStyle TEXT,
-                            BodyType TEXT,
-                            SkinColor TEXT,
-                            Posture TEXT,
-                            Shirt TEXT,
-                            Pants TEXT,
-                            Weapon TEXT
-                        );
-                        ";
+                    CREATE TABLE IF NOT EXISTS Characters (
+                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        Name TEXT,
+                        Role TEXT,
+                        Age INTEGER,
+                        EyeType TEXT,
+                        EyeColor TEXT,
+                        EyebrowColor TEXT,
+                        NoseType TEXT,
+                        MouthType TEXT,
+                        HairStyle TEXT,
+                        FacialHair TEXT,
+                        FacialHairColor TEXT,
+                        Scar TEXT,
+                        BodyType TEXT,
+                        SkinColor TEXT,
+                        Posture TEXT,
+                        Hat TEXT,
+                        Shirt TEXT,
+                        Jacket TEXT,
+                        Pants TEXT,
+                        Gloves TEXT,
+                        Boots TEXT,
+                        Armor TEXT,
+                        Tattoos TEXT,
+                        Weapon TEXT,
+                        IsStealthy INTEGER
+                    );
+                ";
 
                         cmd.ExecuteNonQuery();
                     }

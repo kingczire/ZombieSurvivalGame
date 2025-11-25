@@ -22,7 +22,6 @@ namespace ZombieSurvivalGame.Utils
             Console.WriteLine();
         }
 
-
         public void MenuOptions()
         {
             Console.Clear();
@@ -63,7 +62,47 @@ namespace ZombieSurvivalGame.Utils
             }
         }
 
-        // nose
+        // eye color
+        public void EyeColorOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.EyeColorTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.EyeColorTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.EyeColorTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.EyeColorTypeZombie[i]}");
+                }
+            }
+        }
+
+        // eyebrow color
+        public void EyeBrowColorOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.EyebrowColorTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.EyebrowColorTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.EyebrowColorTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.EyebrowColorTypeZombie[i]}");
+                }
+            }
+        }
+
+        // nose 
         public void NoseTypeOptions()
         {
             Console.WriteLine("========== CHARACTER CREATION ==========");
@@ -84,7 +123,6 @@ namespace ZombieSurvivalGame.Utils
         }
 
         // hair style
-        // Use role parameter instead of reading a possibly-null character
         public void HairStyleOptions(string role)
         {
             Console.WriteLine("========== CHARACTER CREATION ==========");
@@ -100,6 +138,66 @@ namespace ZombieSurvivalGame.Utils
                 for (int i = 0; i < CharacterParts.HairStyleZombie.Length; i++)
                 {
                     Console.WriteLine($"{i + 1}. {CharacterParts.HairStyleZombie[i]}");
+                }
+            }
+        }
+
+        //facial hair
+        public void FacialHairOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.FacialHairTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.FacialHairTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.FacialHairTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.FacialHairTypeZombie[i]}");
+                }
+            }
+        }
+
+        // facial hair color 
+        public void FacialHairColorOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.FacialHairColorTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.FacialHairColorTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.FacialHairColorTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.FacialHairColorTypeZombie[i]}");
+                }
+            }
+        }
+
+        //scars
+        public void ScarsTypeOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.ScarsTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.ScarsTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.ScarsTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.ScarsTypeZombie[i]}");
                 }
             }
         }
@@ -164,6 +262,26 @@ namespace ZombieSurvivalGame.Utils
             }
         }
 
+        //hats
+        public void HatTypeOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.HatTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.HatTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.HatTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.HatTypeZombie[i]}");
+                }
+            }
+        }
+
         // shirt
         public void ShirtTypeOptions(string role)
         {
@@ -180,6 +298,26 @@ namespace ZombieSurvivalGame.Utils
                 for (int i = 0; i < CharacterParts.ShirtTypeZombie.Length; i++)
                 {
                     Console.WriteLine($"{i + 1}. {CharacterParts.ShirtTypeZombie[i]}");
+                }
+            }
+        }
+
+        // jacket
+        public void JacketTypeOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human", StringComparison.OrdinalIgnoreCase))
+            {
+                for (int i = 0; i < CharacterParts.JacketTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.JacketTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.JacketTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.JacketTypeZombie[i]}");
                 }
             }
         }
@@ -201,6 +339,76 @@ namespace ZombieSurvivalGame.Utils
                 {
                     Console.WriteLine($"{i + 1}. {CharacterParts.PantsTypeZombie[i]}");
                 }
+            }
+        }
+
+        // gloves
+        public void GlovesTypeOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human"))
+            {
+                for (int i = 0; i < CharacterParts.GlovesTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.GlovesTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.GlovesTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.GlovesTypeZombie[i]}");
+                }
+            }
+        }
+
+        //boots
+        public void BootsTypeOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human"))
+            {
+                for (int i = 0; i < CharacterParts.BootsTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.BootsTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.BootsTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.BootsTypeZombie[i]}");
+                }
+            }
+        }
+
+        //armor
+        public void ArmorTypeOptions(string role)
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            if (role.Equals("Human"))
+            {
+                for (int i = 0; i < CharacterParts.ArmorTypeHuman.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.ArmorTypeHuman[i]}");
+                }
+            }
+            else
+            {
+                for (int i = 0; i < CharacterParts.ArmorTypeZombie.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {CharacterParts.ArmorTypeZombie[i]}");
+                }
+            }
+        }
+
+        // tattoos
+        public void TattoosOptions()
+        {
+            Console.WriteLine("========== CHARACTER CREATION ==========");
+            for (int i = 0; i < CharacterParts.TattooTypes.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {CharacterParts.TattooTypes[i]}");
             }
         }
 

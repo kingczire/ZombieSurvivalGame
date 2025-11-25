@@ -25,6 +25,7 @@ namespace ZombieSurvivalGame.Services
             {
                 // INTRO
                 int menuChoice = GetMenuChoice("Select an option: ", 0, 4);
+
                 switch (menuChoice)
                 {
                     case 0:
@@ -33,7 +34,6 @@ namespace ZombieSurvivalGame.Services
                         break;
                     case 1:
                         // New game logic here
-
                         // Create character
                         character = characterService.GetCharacterFeatures();
 
@@ -41,8 +41,9 @@ namespace ZombieSurvivalGame.Services
                         characterRepository.SaveCharacter(character);
 
                         character.DisplayCharacterInfo();
-                         Console.WriteLine("\nGoing back to the menu...");
-                        Thread.Sleep(3000);
+                        Console.WriteLine("\nGoing back to the menu...");
+                        Console.ReadKey();
+                        //Thread.Sleep(3000);
 
                         break;
                     case 2:
