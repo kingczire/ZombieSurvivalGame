@@ -1,6 +1,6 @@
 ﻿namespace ZombieSurvivalGame.Domain
 {
-    public abstract class CharacterBase
+    public abstract class CharacterBase : CharacterActions
     {
         public int Id { get; protected set; }
         public string Name { get; protected set; }
@@ -19,6 +19,18 @@
             Console.WriteLine($"{Role}: {Name} (Age: {Age})");
         }
 
-        public abstract void MakeSound();
+        public abstract void MakeSound(string role);
+
+        public void Attack()
+        {
+            string weapon = Role == "Zombie" ? "fingers" : "fists";
+
+            Console.WriteLine($"{Name} - {Role} attacks with {weapon}.");
+        }
+
+        public void Attack(string weapon)
+        {
+            Console.WriteLine($"{Name} - {Role} attacks with {weapon}.");
+        }
     }
 }

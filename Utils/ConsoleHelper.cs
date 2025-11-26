@@ -16,7 +16,7 @@ namespace ZombieSurvivalGame.Utils
 
                 int delay = (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Spacebar) ? 0 : 30;
 
-                //Thread.Sleep(delay);
+                Thread.Sleep(delay);
             }
 
             Console.WriteLine();

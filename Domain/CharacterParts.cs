@@ -20,6 +20,7 @@
             "Hooded",
             "Monolid"
         };
+
         // Eye colors
         public readonly static string[] EyeColorTypeHuman =
         {
@@ -34,6 +35,7 @@
             "White",
             "Black"
         };
+
         // Eyebrow colors
         public readonly static string[] EyebrowColorTypeHuman =
         {
@@ -172,7 +174,7 @@
         {
             "Upright",
             "Slouched",
-            "LeaningForward",
+            "Leaning Forward",
             "Hunched",
             "Defensive",
         };
@@ -204,9 +206,9 @@
         // shirt
         public readonly static string[] ShirtTypeHuman =
         {
-            "TShirt",
+            "T-Shirt",
             "Hoodie",
-            "LongSleeve",
+            "Long Sleeve",
             "Ripped",
             "Military",
         };
@@ -214,7 +216,7 @@
         {
             "Torn",
             "Dirty",
-            "BloodStained",
+            "Blood Stained",
         };
 
         // Jackets

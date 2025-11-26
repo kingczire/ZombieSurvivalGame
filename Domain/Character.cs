@@ -5,7 +5,7 @@ namespace ZombieSurvivalGame.Model
 {
     public class Character : CharacterBase
     {
-        // Struct properties (grouped data)
+        // Struct properties 
         public Appearance Appearance { get; private set; }
         public Apparel Apparel { get; private set; }
         public Equipment Equipment { get; private set; }
@@ -13,42 +13,7 @@ namespace ZombieSurvivalGame.Model
         // Additional property
         public bool IsStealthy { get; private set; }
 
-        // Constructor with individual parameters
-        public Character(
-            string role,
-            string name,
-            int age,
-            string eye,
-            string eyeColor,
-            string eyebrowColor,
-            string nose,
-            string mouth,
-            string hairStyle,
-            string facialHair,
-            string facialHairColor,
-            string scar,
-            string body,
-            string skin,
-            string posture,
-            string hat,
-            string shirt,
-            string jacket,
-            string pants,
-            string gloves,
-            string boots,
-            string armor,
-            string tattoo,
-            string weapon,
-            bool isStealthy
-        ) : base(role, name, age)
-        {
-            this.Appearance = new Appearance(eye, eyeColor, eyebrowColor, nose, mouth, hairStyle, facialHair, facialHairColor, scar, body, skin, posture);
-            this.Apparel = new Apparel(hat, shirt, jacket, pants, gloves, boots);
-            this.Equipment = new Equipment(armor, tattoo, weapon);
-            this.IsStealthy = isStealthy;
-        }
-
-        // Constructor with struct grouping (overloaded)
+        // Constructor with struct grouping
         public Character(
             string role,
             string name,
@@ -65,14 +30,12 @@ namespace ZombieSurvivalGame.Model
             this.IsStealthy = isStealthy;
         }
 
-        public override void MakeSound()
-        {
-            Console.WriteLine($"{Name} makes a sound... but subclasses should override this.");
-        }
 
-        // Display method with visual design
+
+        // Display method 
         public override void DisplayCharacterInfo()
         {
+            Console.Clear();
             base.DisplayCharacterInfo();
 
             string ageDescription = "";
@@ -122,6 +85,18 @@ namespace ZombieSurvivalGame.Model
             Console.WriteLine($"- Stealthy: {(IsStealthy ? "Yes" : "No")}\n");
 
             Console.WriteLine("══════════════════════════════════════════\n");
+        }
+
+        public override void MakeSound(string role)
+        {
+            if (role == "Zombie")
+            {
+                Console.WriteLine("Grrrrrr... Braaaains...");
+            }
+            else if (role == "Human")
+            {
+                Console.WriteLine("Human sound.");
+            }
         }
     }
 }

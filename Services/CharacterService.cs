@@ -1,4 +1,5 @@
 ﻿using ZombieSurvivalGame.Domain;
+using ZombieSurvivalGame.Domain.Characters;
 using ZombieSurvivalGame.Domain.Structures;
 using ZombieSurvivalGame.Model;
 using ZombieSurvivalGame.Utils;
@@ -13,271 +14,159 @@ namespace ZombieSurvivalGame.Services
             Console.Clear();
 
             Console.WriteLine("========== CHARACTER CREATION ==========");
+
             // username
-            string username = Validator.GetValidInput("Enter username: ");
+            string username = Validator.GetValidUsername("Enter username: ");
             Console.Clear();
 
             // role
             ConsoleHelper.CharacterRoleOptions();
-            string role = CharacterParts.RoleType[Validator.GetValidNumber("Choose your role: ", 1, 2) - 1];
-            Console.Clear();
+            string selectedRoleText = CharacterParts.RoleType[
+                Validator.GetValidNumber("Choose your role: ", 1, CharacterParts.RoleType.Length) - 1
+            ];
+
+            Console.WriteLine("ROLE: " + selectedRoleText);
+            string role = selectedRoleText.Split("-")[0].Trim();
+            bool isHuman = role.Equals("Human", StringComparison.OrdinalIgnoreCase);
 
             // age
             ConsoleHelper.AgeOptions();
-            int ageChoice = Validator.GetValidNumber("Enter your age: ", 1, 4);
-            int age = CharacterParts.Ages[ageChoice - 1];
+            int age = CharacterParts.Ages[
+                Validator.GetValidNumber("Enter your age: ", 1, CharacterParts.Ages.Length) - 1
+            ];
             Console.Clear();
 
-            // eye type
-            //consoleHelper.EyeTypeOptions();
-            //string eyeType = CharacterParts.EyeTypes[Validator.GetValidNumber("Choose your eye type: ", 1, CharacterParts.EyeTypes.Length) - 1];
-            string eyeType = AskChoice("Choose your eye type: ", CharacterParts.EyeTypes, consoleHelper.EyeTypeOptions);
+            // APPEARANCE
+            string eyeType = AskChoice("Choose your eye type: ",
+                CharacterParts.EyeTypes,
+                consoleHelper.EyeTypeOptions);
             Console.Clear();
 
-            // eye colors 
-            string[] eyeColorOptions = role == "Human" ? CharacterParts.EyeColorTypeHuman : CharacterParts.EyeColorTypeZombie;
-            string eyeColor = AskChoice("Choose your eye color: ", eyeColorOptions, () => consoleHelper.EyeColorOptions(role));
+            string eyeColor = AskChoice("Choose your eye color: ",
+                isHuman ? CharacterParts.EyeColorTypeHuman : CharacterParts.EyeColorTypeZombie,
+                () => consoleHelper.EyeColorOptions(role));
             Console.Clear();
 
-            //eyebrow color
-            string[] eyebrowColorOptions = role == "Human" ? CharacterParts.EyebrowColorTypeHuman : CharacterParts.EyebrowColorTypeZombie;
-            string eyebrowColor = AskChoice("Choose your eyebrow color: ", eyebrowColorOptions, () => consoleHelper.EyeBrowColorOptions(role));
+            string eyebrowColor = AskChoice("Choose your eyebrow color: ",
+                isHuman ? CharacterParts.EyebrowColorTypeHuman : CharacterParts.EyebrowColorTypeZombie,
+                () => consoleHelper.EyeBrowColorOptions(role));
             Console.Clear();
 
-            // NOTE: The following sections follow a similar pattern above.
-            // nose type 
-            consoleHelper.NoseTypeOptions();
-            string noseType = CharacterParts.NoseTypes[Validator.GetValidNumber("Choose your nose type: ", 1, CharacterParts.NoseTypes.Length) - 1];
+            string noseType = AskChoice("Choose your nose type: ",
+                CharacterParts.NoseTypes,
+                consoleHelper.NoseTypeOptions);
             Console.Clear();
 
-            // mouse type
-            consoleHelper.MouthTypeOptions();
-            string mouthType = CharacterParts.MouthTypes[Validator.GetValidNumber("Choose your mouth type: ", 1, CharacterParts.MouthTypes.Length) - 1];
+            string mouthType = AskChoice("Choose your mouth type: ",
+                CharacterParts.MouthTypes,
+                consoleHelper.MouthTypeOptions);
             Console.Clear();
 
-            // hair style
-            string hairStyle;
-            consoleHelper.HairStyleOptions(role);
-
-            if (role.Equals("Human"))
-            {
-                hairStyle = CharacterParts.HairStyleHuman[Validator.GetValidNumber("Choose your hairstyle: ", 1, CharacterParts.HairStyleHuman.Length) - 1];
-            }
-            else
-            {
-                hairStyle = CharacterParts.HairStyleZombie[Validator.GetValidNumber("Choose your hairstyle: ", 1, CharacterParts.HairStyleZombie.Length) - 1];
-            }
+            string hairStyle = AskChoice("Choose your hair style: ",
+                isHuman ? CharacterParts.HairStyleHuman : CharacterParts.HairStyleZombie,
+                () => consoleHelper.HairStyleOptions(role));
             Console.Clear();
 
-            // facial hair
-            consoleHelper.FacialHairOptions(role);
-            string facialHair = "";
-            if (role.Equals("Human"))
-            {
-                facialHair = CharacterParts.FacialHairTypeHuman[Validator.GetValidNumber("Choose your Facial Hair: ", 1, CharacterParts.FacialHairTypeHuman.Length) - 1];
-            }
-            else
-            {
-                facialHair = CharacterParts.FacialHairTypeZombie[Validator.GetValidNumber("Choose your Facial Hair: ", 1, CharacterParts.FacialHairTypeZombie.Length) - 1];
-            }
+            string facialHair = AskChoice("Choose your facial hair: ",
+                isHuman ? CharacterParts.FacialHairTypeHuman : CharacterParts.FacialHairTypeZombie,
+                () => consoleHelper.FacialHairOptions(role));
             Console.Clear();
 
-            //facial hair color 
-            consoleHelper.FacialHairColorOptions(role);
-            string facialHairColor = "";
-            if (role.Equals("Human"))
-            {
-                facialHairColor = CharacterParts.FacialHairColorTypeHuman[Validator.GetValidNumber("Choose your Facial Hair Color: ", 1, CharacterParts.FacialHairColorTypeHuman.Length) - 1];
-            }
-            else
-            {
-                facialHairColor = CharacterParts.FacialHairColorTypeZombie[Validator.GetValidNumber("Choose your Facial Hair Color: ", 1, CharacterParts.FacialHairColorTypeZombie.Length) - 1];
-            }
+            string facialHairColor = AskChoice("Choose your facial hair color: ",
+                isHuman ? CharacterParts.FacialHairColorTypeHuman : CharacterParts.FacialHairColorTypeZombie,
+                () => consoleHelper.FacialHairColorOptions(role));
             Console.Clear();
 
-            //scars type
-            consoleHelper.ScarsTypeOptions(role);
-            string scarsType = "";
-            if (role.Equals("Human"))
-            {
-                scarsType = CharacterParts.ScarsTypeHuman[Validator.GetValidNumber("Choose your Scars Type: ", 1, CharacterParts.ScarsTypeHuman.Length) - 1];
-            }
-            else
-            {
-                scarsType = CharacterParts.ScarsTypeZombie[Validator.GetValidNumber("Choose your Scars Type: ", 1, CharacterParts.ScarsTypeZombie.Length) - 1];
-            }
+            string scarsType = AskChoice("Choose your scars type: ",
+                isHuman ? CharacterParts.ScarsTypeHuman : CharacterParts.ScarsTypeZombie,
+                () => consoleHelper.ScarsTypeOptions(role));
             Console.Clear();
 
-            // body type
-            consoleHelper.BodyTypeOptions(role);
-            string bodyType = "";
-            if (role.Equals("Human"))
-            {
-                bodyType = CharacterParts.BodyTypeHuman[Validator.GetValidNumber("Choose your body type: ", 1, CharacterParts.BodyTypeHuman.Length) - 1];
-            }
-            else
-            {
-                bodyType = CharacterParts.BodyTypeZombie[Validator.GetValidNumber("Choose your body type: ", 1, CharacterParts.BodyTypeZombie.Length) - 1];
-            }
+            string bodyType = AskChoice("Choose your body type: ",
+                isHuman ? CharacterParts.BodyTypeHuman : CharacterParts.BodyTypeZombie,
+                () => consoleHelper.BodyTypeOptions(role));
             Console.Clear();
 
-            //skin color 
-            consoleHelper.SkinColorOptions(role);
-            string skinColor = "";
-            if (role.Equals("Human"))
-            {
-                skinColor = CharacterParts.SkinColorHuman[Validator.GetValidNumber("Choose your skin color: ", 1, CharacterParts.SkinColorHuman.Length) - 1];
-            }
-            else
-            {
-                skinColor = CharacterParts.SkinColorZombie[Validator.GetValidNumber("Choose your skin color: ", 1, CharacterParts.SkinColorZombie.Length) - 1];
-            }
+            string skinColor = AskChoice("Choose your skin color: ",
+                isHuman ? CharacterParts.SkinColorHuman : CharacterParts.SkinColorZombie,
+                () => consoleHelper.SkinColorOptions(role));
             Console.Clear();
 
-            // posture
-            consoleHelper.PostureOptions(role);
-            string posture = "";
-            if (role.Equals("Human"))
-            {
-                posture = CharacterParts.PostureTypeHuman[Validator.GetValidNumber("Choose your Posture Type: ", 1, CharacterParts.PostureTypeHuman.Length) - 1];
-            }
-            else
-            {
-                posture = CharacterParts.PostureTypeZombie[Validator.GetValidNumber("Choose your Posture Type: ", 1, CharacterParts.PostureTypeZombie.Length) - 1];
-            }
+            string posture = AskChoice("Choose your posture type: ",
+                isHuman ? CharacterParts.PostureTypeHuman : CharacterParts.PostureTypeZombie,
+                () => consoleHelper.PostureOptions(role));
             Console.Clear();
 
-            // hats
-            consoleHelper.HatTypeOptions(role);
-            string hat = "";
-            if (role.Equals("Human"))
-            {
-                hat = CharacterParts.HatTypeHuman[Validator.GetValidNumber("Choose your Hat Type: ", 1, CharacterParts.HatTypeHuman.Length) - 1];
-            }
-            else
-            {
-                hat = CharacterParts.HatTypeZombie[Validator.GetValidNumber("Choose your Hat Type: ", 1, CharacterParts.HatTypeZombie.Length) - 1];
-            }
+            // APPAREL
+            string hat = AskChoice("Choose your hat type: ",
+                isHuman ? CharacterParts.HatTypeHuman : CharacterParts.HatTypeZombie,
+                () => consoleHelper.HatTypeOptions(role));
             Console.Clear();
 
-            // shirt type
-            consoleHelper.ShirtTypeOptions(role);
-            string shirt = "";
-            if (role.Equals("Human"))
-            {
-                shirt = CharacterParts.ShirtTypeHuman[Validator.GetValidNumber("Choose your Shirt Type: ", 1, CharacterParts.ShirtTypeHuman.Length) - 1];
-            }
-            else
-            {
-                shirt = CharacterParts.ShirtTypeZombie[Validator.GetValidNumber("Choose your Shirt Type: ", 1, CharacterParts.ShirtTypeZombie.Length) - 1];
-            }
+            string shirt = AskChoice("Choose your shirt type: ",
+                isHuman ? CharacterParts.ShirtTypeHuman : CharacterParts.ShirtTypeZombie,
+                () => consoleHelper.ShirtTypeOptions(role));
             Console.Clear();
 
-            // jacket
-            consoleHelper.JacketTypeOptions(role);
-            string jacket = "";
-            if (role.Equals("Human"))
-            {
-                jacket = CharacterParts.JacketTypeHuman[Validator.GetValidNumber("Choose your Jacket Type: ", 1, CharacterParts.JacketTypeHuman.Length) - 1];
-            }
-            else
-            {
-                jacket = CharacterParts.JacketTypeZombie[Validator.GetValidNumber("Choose your Jacket Type: ", 1, CharacterParts.JacketTypeZombie.Length) - 1];
-            }
+            string jacket = AskChoice("Choose your jacket type: ",
+                isHuman ? CharacterParts.JacketTypeHuman : CharacterParts.JacketTypeZombie,
+                () => consoleHelper.JacketTypeOptions(role));
             Console.Clear();
 
-            // pants type
-            consoleHelper.PantsTypeOptions(role);
-            string pantsType = "";
-            if (role.Equals("Human"))
-            {
-                pantsType = CharacterParts.PantsTypeHuman[
-                    Validator.GetValidNumber("Choose your pants type: ", 1, CharacterParts.PantsTypeHuman.Length) - 1];
-            }
-            else
-            {
-                pantsType = CharacterParts.PantsTypeZombie[
-                    Validator.GetValidNumber("Choose your pants type: ", 1, CharacterParts.PantsTypeZombie.Length) - 1];
-            }
+            string pantsType = AskChoice("Choose your pants type: ",
+                isHuman ? CharacterParts.PantsTypeHuman : CharacterParts.PantsTypeZombie,
+                () => consoleHelper.PantsTypeOptions(role));
             Console.Clear();
 
-            //gloves
-            consoleHelper.GlovesTypeOptions(role);
-            string gloves = "";
-            if (role.Equals("Human"))
-            {
-                gloves = CharacterParts.GlovesTypeHuman[
-                    Validator.GetValidNumber("Choose your Gloves type: ", 1, CharacterParts.GlovesTypeHuman.Length) - 1];
-            }
-            else
-            {
-                pantsType = CharacterParts.GlovesTypeZombie[
-                    Validator.GetValidNumber("Choose your Gloves type: ", 1, CharacterParts.GlovesTypeZombie.Length) - 1];
-            }
+            string gloves = AskChoice("Choose your gloves type: ",
+                isHuman ? CharacterParts.GlovesTypeHuman : CharacterParts.GlovesTypeZombie,
+                () => consoleHelper.GlovesTypeOptions(role));
             Console.Clear();
 
-            //boots 
-            consoleHelper.BootsTypeOptions(role);
-            string boots = "";
-            if (role.Equals("Human"))
-            {
-                boots = CharacterParts.JacketTypeHuman[Validator.GetValidNumber("Choose your Boots Type: ", 1, CharacterParts.BootsTypeHuman.Length) - 1];
-            }
-            else
-            {
-                boots = CharacterParts.JacketTypeZombie[Validator.GetValidNumber("Choose your Boots Type: ", 1, CharacterParts.BootsTypeZombie.Length) - 1];
-            }
+            string boots = AskChoice("Choose your boots type: ",
+                isHuman ? CharacterParts.BootsTypeHuman : CharacterParts.BootsTypeZombie,
+                () => consoleHelper.BootsTypeOptions(role));
             Console.Clear();
 
-            // armor
-            consoleHelper.ArmorTypeOptions(role);
-            string armor = "";
-            if (role.Equals("Human"))
-            {
-                armor = CharacterParts.ArmorTypeHuman[Validator.GetValidNumber("Choose your Boots Type: ", 1, CharacterParts.ArmorTypeHuman.Length) - 1];
-            }
-            else
-            {
-                armor = CharacterParts.ArmorTypeZombie[Validator.GetValidNumber("Choose your Boots Type: ", 1, CharacterParts.ArmorTypeZombie.Length) - 1];
-            }
+            // EQUIPMENT
+            string armor = AskChoice("Choose your armor type: ",
+                isHuman ? CharacterParts.ArmorTypeHuman : CharacterParts.ArmorTypeZombie,
+                () => consoleHelper.ArmorTypeOptions(role));
             Console.Clear();
 
-            // tattoos
-            consoleHelper.TattoosOptions();
-            string tattoo = CharacterParts.EyeTypes[Validator.GetValidNumber("Choose your tattoos types: ", 1, CharacterParts.TattooTypes.Length) - 1];
+            string tattoo = AskChoice("Choose your tattoo type: ",
+                CharacterParts.TattooTypes,
+                () => consoleHelper.TattoosOptions());
             Console.Clear();
 
-            // weapon type
-            consoleHelper.WeaponTypeOptions(role);
-            string weaponType = "";
-            if (role.Equals("Human"))
-            {
-                weaponType = CharacterParts.WeaponTypeHuman[
-                    Validator.GetValidNumber("Choose your weapon type: ", 1, CharacterParts.WeaponTypeHuman.Length) - 1];
-            }
-            else
-            {
-                weaponType = CharacterParts.WeaponTypeZombie[
-                    Validator.GetValidNumber("Choose your weapon type: ", 1, CharacterParts.WeaponTypeZombie.Length) - 1];
-            }
+            string weaponType = AskChoice("Choose your weapon type: ",
+                isHuman ? CharacterParts.WeaponTypeHuman : CharacterParts.WeaponTypeZombie,
+                () => consoleHelper.WeaponTypeOptions(role));
             Console.Clear();
 
-            // stealth perks [Validator.GetValidBoolean() gagamitin dito]
+            // stealth
             consoleHelper.StealthOptions(role);
-            bool isStealthy = Validator.GetValidBoolean("Do you want to have stealth perks? (yes/no): ");
+            bool isStealthy = Validator.GetValidBoolean("Do you want stealth perks? (yes/no): ");
             Console.Clear();
 
-            // create character object
-            // NOTE: Some attributes are set to "Sample" as placeholders and MUST be replaced
-            //       with actual user inputs or logic as needed.
-            Appearance appearance = new Appearance(eyeType, eyeColor, eyebrowColor, noseType, mouthType, hairStyle, facialHair, facialHairColor, scarsType, bodyType, skinColor, posture);
-            Apparel apparel = new Apparel(hat, shirt, jacket, pantsType, gloves, boots);
-            Equipment equipment = new Equipment(armor, tattoo, weapon: weaponType);
+            // objects
+            Appearance appearance = new Appearance(
+                eyeType, eyeColor, eyebrowColor, noseType, mouthType,
+                hairStyle, facialHair, facialHairColor, scarsType,
+                bodyType, skinColor, posture);
 
-            return new Character(role, name: username, age, appearance, apparel, equipment, isStealthy);
+            Apparel apparel = new Apparel(hat, shirt, jacket, pantsType, gloves, boots);
+
+            Equipment equipment = new Equipment(armor, tattoo, weaponType);
+
+            // final result
+            if (isHuman)
+                return new Human(role, username, age, appearance, apparel, equipment, isStealthy);
+
+            return new Zombie(role, username, age, appearance, apparel, equipment, isStealthy);
         }
 
-        private string AskChoice(string prompt, string[] options, Action? showOptions = null)
+        private string AskChoice(string prompt, string[] options, Action showOptions)
         {
             showOptions?.Invoke();
             int choice = Validator.GetValidNumber(prompt, 1, options.Length);

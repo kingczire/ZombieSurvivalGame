@@ -2,6 +2,23 @@
 {
     public static class Validator
     {
+        public static string GetValidUsername(string prompt)
+        {
+            string input = "";
+            while (true)
+            {
+                Console.Write(prompt);
+                input = Console.ReadLine() ?? "";
+                if (!string.IsNullOrEmpty(input.Trim()) && input.Length >= 3)
+                {
+                    return input;
+                }
+                else
+                {
+                    Console.WriteLine("Username must be at least 3 characters long. Please try again.");
+                }
+            }
+        }
         public static string GetValidInput(string prompt)
         {
             string input = "";

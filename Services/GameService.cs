@@ -41,9 +41,17 @@ namespace ZombieSurvivalGame.Services
                         characterRepository.SaveCharacter(character);
 
                         character.DisplayCharacterInfo();
-                        Console.WriteLine("\nGoing back to the menu...");
+
+                        Console.WriteLine("\n╔════════════════════════════════════════╗");
+                        Console.WriteLine("║             CHARACTER ACTIONS            ║");
+                        Console.WriteLine("╚════════════════════════════════════════╝\n");
+                        // Demonstrate character actions
+                        character.Attack();
+                        character.Attack(character.Equipment.Weapon);
+                        character.MakeSound(character.Role);
+
+                        ConsoleHelper.TypeEffect("Press any key to continue...");
                         Console.ReadKey();
-                        //Thread.Sleep(3000);
 
                         break;
                     case 2:
@@ -55,8 +63,8 @@ namespace ZombieSurvivalGame.Services
                         {
                             ConsoleHelper.TypeEffect("No saved characters found.");
 
-                            Console.WriteLine("\nGoing back to the menu...");
-                            Thread.Sleep(3000);
+                            ConsoleHelper.TypeEffect("Press any key to continue...");
+                            Console.ReadKey();
                             break;
                         }
 
@@ -72,9 +80,15 @@ namespace ZombieSurvivalGame.Services
                         ConsoleHelper.TypeEffect($"Character {selectedCharacter.Name} loaded successfully!");
                         selectedCharacter.DisplayCharacterInfo();
 
-                        // NOTE: After selecting character, proceed to menu again Sleep for now
-                        Console.WriteLine("\nGoing back to the menu...");
-                        //Thread.Sleep(3000);
+                        Console.WriteLine("\n╔════════════════════════════════════════╗");
+                        Console.WriteLine("║             CHARACTER ACTIONS            ║");
+                        Console.WriteLine("╚════════════════════════════════════════╝\n");
+                        // Demonstrate character actions
+                        selectedCharacter.Attack();
+                        selectedCharacter.Attack(selectedCharacter.Equipment.Weapon);
+                        selectedCharacter.MakeSound(selectedCharacter.Role);
+
+                        ConsoleHelper.TypeEffect("Press any key to continue...");
                         Console.ReadKey();
 
                         break;

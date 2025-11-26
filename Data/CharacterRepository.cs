@@ -1,4 +1,5 @@
 ﻿using ZombieSurvivalGame.Config;
+using ZombieSurvivalGame.Domain.Structures;
 using ZombieSurvivalGame.Model;
 
 namespace ZombieSurvivalGame.Data
@@ -77,10 +78,7 @@ namespace ZombieSurvivalGame.Data
                         {
                             while (reader.Read())
                             {
-                                Character character = new Character(
-                                    reader.GetString(reader.GetOrdinal("Role")),
-                                    reader.GetString(reader.GetOrdinal("Name")),
-                                    reader.GetInt32(reader.GetOrdinal("Age")),
+                                Appearance appearance = new Appearance(
                                     reader.GetString(reader.GetOrdinal("EyeType")),
                                     reader.GetString(reader.GetOrdinal("EyeColor")),
                                     reader.GetString(reader.GetOrdinal("EyebrowColor")),
@@ -92,18 +90,29 @@ namespace ZombieSurvivalGame.Data
                                     reader.GetString(reader.GetOrdinal("Scar")),
                                     reader.GetString(reader.GetOrdinal("BodyType")),
                                     reader.GetString(reader.GetOrdinal("SkinColor")),
-                                    reader.GetString(reader.GetOrdinal("Posture")),
+                                    reader.GetString(reader.GetOrdinal("Posture"))
+                                );
+                                Apparel apparel = new Apparel(
                                     reader.GetString(reader.GetOrdinal("Hat")),
                                     reader.GetString(reader.GetOrdinal("Shirt")),
                                     reader.GetString(reader.GetOrdinal("Jacket")),
                                     reader.GetString(reader.GetOrdinal("Pants")),
                                     reader.GetString(reader.GetOrdinal("Gloves")),
-                                    reader.GetString(reader.GetOrdinal("Boots")),
+                                    reader.GetString(reader.GetOrdinal("Boots"))
+                                );
+                                Equipment equipment = new Equipment(
                                     reader.GetString(reader.GetOrdinal("Armor")),
                                     reader.GetString(reader.GetOrdinal("Tattoo")),
-                                    reader.GetString(reader.GetOrdinal("Weapon")),
+                                    reader.GetString(reader.GetOrdinal("Weapon"))
+                                );
+                                Character character = new Character(
+                                    reader.GetString(reader.GetOrdinal("Role")),
+                                    reader.GetString(reader.GetOrdinal("Name")),
+                                    reader.GetInt32(reader.GetOrdinal("Age")),
+                                    appearance, apparel, equipment,
                                     reader.GetInt32(reader.GetOrdinal("IsStealthy")) != 0
                                 );
+
                                 characters.Add(character);
                             }
                         }
