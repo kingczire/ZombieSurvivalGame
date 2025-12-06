@@ -20,6 +20,30 @@ namespace ZombieSurvivalGame.Utils
             Console.WriteLine("╚════════════════════════════════════════╝\n");
         }
 
+        public static void DisplayLoadCharacterHeader()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║           LOAD YOUR CHARACTER          ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
+        }
+
+        public static void DisplayDeleteCharacterHeader()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║         DELETE YOUR CHARACTER          ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
+        }
+
+        public static void DisplayConfirmDeletionHeader()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║           CONFIRM DELETION             ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
+        }
+
         public static void ErrorMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;

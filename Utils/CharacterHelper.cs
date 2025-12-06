@@ -32,14 +32,10 @@ namespace ZombieSurvivalGame.Utils
 
         public static void HandleLoadCharacter()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║           LOAD YOUR CHARACTER          ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
+            ConsoleHelper.DisplayLoadCharacterHeader();
 
             AnimationHelper.SimulatedLoading("Loading saved characters...", "Characters loaded successfully!\n");
             List<Character> characters = characterService.LoadCharacters();
-            Console.Clear();
 
             if (characters.Count == 0)
             {
@@ -51,17 +47,12 @@ namespace ZombieSurvivalGame.Utils
             }
 
 
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║           LOAD YOUR CHARACTER          ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
+            ConsoleHelper.DisplayLoadCharacterHeader();
             consoleHelper.DisplayCharacters(characters);
 
             int charChoice = Validator.GetValidNumber("Enter the number of the character to load: ", 0, characters.Count, () =>
             {
-                Console.Clear();
-                Console.WriteLine("╔════════════════════════════════════════╗");
-                Console.WriteLine("║           LOAD YOUR CHARACTER          ║");
-                Console.WriteLine("╚════════════════════════════════════════╝\n");
+                ConsoleHelper.DisplayLoadCharacterHeader();
                 consoleHelper.DisplayCharacters(characters);
             });
             if (charChoice == 0)
@@ -81,14 +72,10 @@ namespace ZombieSurvivalGame.Utils
 
         public static void HandleDeleteCharacter()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║         DELETE YOUR CHARACTER          ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
+            ConsoleHelper.DisplayDeleteCharacterHeader();
 
             AnimationHelper.SimulatedLoading("Loading saved characters...", "Characters loaded successfully!\n");
             List<Character> characters = characterService.LoadCharacters();
-            Console.Clear();
             
             if (characters.Count == 0)
             {
@@ -98,17 +85,13 @@ namespace ZombieSurvivalGame.Utils
                 return;
             }
 
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║         DELETE YOUR CHARACTER          ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
+            ConsoleHelper.DisplayDeleteCharacterHeader();
+
             consoleHelper.DisplayCharacters(characters);
 
             int deleteChoice = Validator.GetValidNumber("Enter the number of the character to delete: ", 0, characters.Count, () =>
             {
-                Console.Clear();
-                Console.WriteLine("╔════════════════════════════════════════╗");
-                Console.WriteLine("║         DELETE YOUR CHARACTER          ║");
-                Console.WriteLine("╚════════════════════════════════════════╝\n");
+                ConsoleHelper.DisplayDeleteCharacterHeader();
                 consoleHelper.DisplayCharacters(characters);
             });
 
@@ -121,10 +104,7 @@ namespace ZombieSurvivalGame.Utils
             Character characterToDelete = characters[deleteChoice - 1];
 
             // Confirmation prompt
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║           CONFIRM DELETION             ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
+            ConsoleHelper.DisplayConfirmDeletionHeader();
             
             Console.WriteLine($"Character: {characterToDelete.Name} ({characterToDelete.Role})");
             Console.WriteLine("!!WARNING: This action cannot be undone!");
@@ -132,11 +112,8 @@ namespace ZombieSurvivalGame.Utils
 
             bool confirmDelete = Validator.GetValidBoolean("Are you sure you want to delete this character? (yes/no): ", () =>
             {
-                Console.Clear();
-                Console.WriteLine("╔════════════════════════════════════════╗");
-                Console.WriteLine("║           CONFIRM DELETION             ║");
-                Console.WriteLine("╚════════════════════════════════════════╝\n");
-                
+                ConsoleHelper.DisplayConfirmDeletionHeader();
+
                 Console.WriteLine($"Character: {characterToDelete.Name} ({characterToDelete.Role})");
                 Console.WriteLine("!!WARNING: This action cannot be undone!");
                 Console.WriteLine();
