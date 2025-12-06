@@ -1,5 +1,6 @@
 ﻿using ZombieSurvivalGame.Domain;
 using ZombieSurvivalGame.Domain.Structures;
+using ZombieSurvivalGame.Utils;
 
 namespace ZombieSurvivalGame.Model
 {
@@ -30,22 +31,33 @@ namespace ZombieSurvivalGame.Model
             this.IsStealthy = isStealthy;
         }
 
+        // Constructor that includes Id (used when loading from DB)
+        public Character(int id,
+            string role,
+            string name,
+            int age,
+            Appearance appearance,
+            Apparel apparel,
+            Equipment equipment,
+            bool isStealthy
+        ) : this(role, name, age, appearance, apparel, equipment, isStealthy)
+        {
+            this.Id = id;
+        }
+
 
 
         // Display method 
-        public override void DisplayCharacterInfo()
+        public override void DisplayCharacterInfo(Character character)
         {
             Console.Clear();
-            base.DisplayCharacterInfo();
-
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║          CHARACTER INFORMATION         ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
             string ageDescription = "";
             int index = Array.IndexOf(CharacterParts.Ages, Age);
             if (index >= 0 && index < CharacterParts.AgeDescriptions.Length)
                 ageDescription = CharacterParts.AgeDescriptions[index];
-
-            Console.WriteLine("\n╔════════════════════════════════════════╗");
-            Console.WriteLine("║          CHARACTER INFORMATION         ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
 
             // Basic info
             Console.WriteLine($"Name: {Name}");
@@ -84,7 +96,14 @@ namespace ZombieSurvivalGame.Model
             Console.WriteLine($"- Weapon: {Equipment.Weapon}");
             Console.WriteLine($"- Stealthy: {(IsStealthy ? "Yes" : "No")}\n");
 
-            Console.WriteLine("══════════════════════════════════════════\n");
+            Console.WriteLine("\n╔════════════════════════════════════════╗");
+            Console.WriteLine("║             CHARACTER ACTIONS          ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
+
+            // Demonstrate character actions
+            character.Attack();
+            character.Attack(character.Equipment.Weapon);
+            character.MakeSound(character.Role);
         }
 
         public override void MakeSound(string role)

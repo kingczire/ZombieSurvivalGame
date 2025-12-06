@@ -1,4 +1,6 @@
-﻿namespace ZombieSurvivalGame.Domain
+﻿using ZombieSurvivalGame.Model;
+
+namespace ZombieSurvivalGame.Domain
 {
     public abstract class CharacterBase : CharacterActions
     {
@@ -14,7 +16,7 @@
             this.Age = age;
         }
 
-        public virtual void DisplayCharacterInfo()
+        public virtual void DisplayCharacterInfo(Character character)
         {
             Console.WriteLine($"{Role}: {Name} (Age: {Age})");
         }

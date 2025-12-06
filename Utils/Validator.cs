@@ -2,7 +2,7 @@
 {
     public static class Validator
     {
-        public static string GetValidUsername(string prompt)
+        public static string GetValidUsername(string prompt, Action redraw = null)
         {
             string input = "";
             while (true)
@@ -15,11 +15,14 @@
                 }
                 else
                 {
-                    Console.WriteLine("Username must be at least 3 characters long. Please try again.");
+                    Console.Clear();
+                    redraw?.Invoke();
+                    ConsoleHelper.ErrorMessage("Username must be at least 3 characters long. Please try again.");
                 }
             }
         }
-        public static string GetValidInput(string prompt)
+
+        public static string GetValidInput(string prompt, Action redraw = null)
         {
             string input = "";
             while (true)
@@ -32,17 +35,20 @@
                 }
                 else
                 {
-                    Console.WriteLine("Input cannot be empty. Please try again.");
+                    Console.Clear();
+                    redraw?.Invoke();
+                    ConsoleHelper.ErrorMessage("Input cannot be empty. Please try again.");
                 }
             }
         }
-        public static int GetValidNumber(string prompt, int min, int max)
+
+        public static int GetValidNumber(string prompt, int min, int max, Action redraw = null)
         {
             int choice = -1;
 
             while (true)
             {
-                string input = GetValidInput(prompt);
+                string input = GetValidInput(prompt, redraw);
 
                 if (int.TryParse(input, out choice))
                 {
@@ -52,21 +58,25 @@
                     }
                     else
                     {
-                        Console.WriteLine($"Choice must be in range of {min} and {max}. Please try again.");
+                        Console.Clear();
+                        redraw?.Invoke();
+                        ConsoleHelper.ErrorMessage($"Choice must be in range of {min} and {max}. Please try again.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Please enter a numeric value for age.");
+                    Console.Clear();
+                    redraw?.Invoke();
+                    ConsoleHelper.ErrorMessage("Invalid input. Please enter a numeric value.");
                 }
             }
         }
 
-        public static bool GetValidBoolean(string prompt)
+        public static bool GetValidBoolean(string prompt, Action redraw = null)
         {
             while (true)
             {
-                string input = (GetValidInput(prompt).Trim().ToLower());
+                string input = (GetValidInput(prompt, redraw).Trim().ToLower());
 
                 if (input == "y" || input == "yes" || input == "true")
                 {
@@ -78,7 +88,9 @@
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input. Please enter 'yes' or 'no' (y/n).");
+                    Console.Clear();
+                    redraw?.Invoke();
+                    ConsoleHelper.ErrorMessage("Invalid input. Please enter 'yes' or 'no' (y/n).");
                 }
             }
         }

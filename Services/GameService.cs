@@ -21,87 +21,26 @@ namespace ZombieSurvivalGame.Services
         public void Start()
         {
             bool start = true;
+            consoleHelper.ShowGameTitle();
+
             while (start)
             {
                 // INTRO
-                int menuChoice = GetMenuChoice("Select an option: ", 0, 4);
+                int menuChoice = consoleHelper.ShowMainMenu();
 
                 switch (menuChoice)
                 {
                     case 0:
-                        // Exit
-                        start = false;
+                        // New game logic here
+                        // Character management
+                        Console.Clear();
+                        Console.WriteLine("╔════════════════════════════════════════╗");
+                        Console.WriteLine("║           MANAGE CHARACTERS            ║");
+                        Console.WriteLine("╚════════════════════════════════════════╝\n");
+                        characterService.ManageCharacters();
                         break;
                     case 1:
-                        // New game logic here
-                        // Create character
-                        Console.Clear();
-                        Console.WriteLine("╔════════════════════════════════════════╗");
-                        Console.WriteLine("║          CREATE YOUR CHARACTER         ║");
-                        Console.WriteLine("╚════════════════════════════════════════╝\n");
-
-                        character = characterService.GetCharacterFeatures();
-
-                        // Save Character to DB
-                        characterRepository.SaveCharacter(character);
-
-                        character.DisplayCharacterInfo();
-
-                        Console.WriteLine("\n╔════════════════════════════════════════╗");
-                        Console.WriteLine("║             CHARACTER ACTIONS          ║");
-                        Console.WriteLine("╚════════════════════════════════════════╝\n");
-                        // Demonstrate character actions
-                        character.Attack();
-                        character.Attack(character.Equipment.Weapon);
-                        character.MakeSound(character.Role);
-
-                        ConsoleHelper.TypeEffect("Press any key to continue...");
-                        Console.ReadKey();
-
-                        break;
-                    case 2:
-                        // Load game logic here
-                        Console.Clear();
-                        Console.WriteLine("╔════════════════════════════════════════╗");
-                        Console.WriteLine("║           LOAD YOUR CHARACTER          ║");
-                        Console.WriteLine("╚════════════════════════════════════════╝\n");
-                        List<Character> characters = characterRepository.LoadCharacters();
-
-                        if (characters.Count == 0)
-                        {
-                            ConsoleHelper.TypeEffect("No saved characters found.");
-
-                            ConsoleHelper.TypeEffect("Press any key to continue...");
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        ConsoleHelper.TypeEffect("Select a character to load:");
-                        for (int i = 0; i < characters.Count; i++)
-                        {
-                            Console.WriteLine($"{i + 1}. {characters[i].Name} - {characters[i].Role}");
-                        }
-
-                        int charChoice = Validator.GetValidNumber("Enter the number of the character to load: ", 1, characters.Count);
-                        Character selectedCharacter = characters[charChoice - 1];
-
-                        ConsoleHelper.TypeEffect($"Character {selectedCharacter.Name} loaded successfully!");
-                        selectedCharacter.DisplayCharacterInfo();
-
-                        Console.WriteLine("\n╔════════════════════════════════════════╗");
-                        Console.WriteLine("║             CHARACTER ACTIONS            ║");
-                        Console.WriteLine("╚════════════════════════════════════════╝\n");
-                        // Demonstrate character actions
-                        selectedCharacter.Attack();
-                        selectedCharacter.Attack(selectedCharacter.Equipment.Weapon);
-                        selectedCharacter.MakeSound(selectedCharacter.Role);
-
-                        ConsoleHelper.TypeEffect("Press any key to continue...");
-                        Console.ReadKey();
-
-                        break;
-                    case 3:
-                        // Campaign mode logic here
+                        //Campaign mode logic here
                         Console.Clear();
                         Console.WriteLine("╔════════════════════════════════════╗");
                         Console.WriteLine("║         CAMPAIGN MODE STORY        ║");
@@ -120,8 +59,9 @@ namespace ZombieSurvivalGame.Services
                         Thread.Sleep(2000);
                         ConsoleHelper.TypeEffect("Press any key to continue...");
                         Console.ReadKey();
+
                         break;
-                    case 4:
+                    case 2:
                         // Credits logic here
                         Console.Clear();
                         Console.WriteLine("╔════════════════════════════════════╗");
@@ -147,16 +87,13 @@ namespace ZombieSurvivalGame.Services
                         ConsoleHelper.TypeEffect("Press any key to continue...");
                         Console.ReadKey();
                         break;
+                    case 3:
+                        start = false;
+                        break;
                 }
             }
             ConsoleHelper.TypeEffect("Thanks for using this program!");
 
-        }
-
-        private int GetMenuChoice(string prompt, int min, int max)
-        {
-            consoleHelper.MenuOptions();
-            return Validator.GetValidNumber(prompt, min, max);
         }
     }
 }

@@ -49,14 +49,46 @@ namespace ZombieSurvivalGame.Data
                         cmd.Parameters.AddWithValue("@IsStealthy", character.IsStealthy ? 1 : 0);
                         cmd.ExecuteNonQuery();
                     }
-
-                    Console.WriteLine("Character Created!");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error in saving character: " + e.Message);
-                Console.WriteLine(e.StackTrace);
+                throw new Exception("Error in saving character: " + e.Message);
+            }
+        }
+
+        // delete character
+        public bool DeleteCharacter(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Invalid ID: Cannot proceed in deleting character.");
+            }
+
+            try
+            {
+                using (var conn = new SqliteDatabase().CreateConnection())
+                {
+                    conn.Open();
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "DELETE FROM Characters WHERE Id = @Id;";
+                        cmd.Parameters.AddWithValue("@Id", id);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            throw new Exception("No character found with the given ID.");
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error in deleting character: " + e.Message);
             }
         }
 
@@ -103,7 +135,9 @@ namespace ZombieSurvivalGame.Data
                                     reader.GetString(reader.GetOrdinal("Tattoo")),
                                     reader.GetString(reader.GetOrdinal("Weapon"))
                                 );
+                                int id = reader.GetInt32(reader.GetOrdinal("Id"));
                                 Character character = new Character(
+                                    id,
                                     reader.GetString(reader.GetOrdinal("Role")),
                                     reader.GetString(reader.GetOrdinal("Name")),
                                     reader.GetInt32(reader.GetOrdinal("Age")),
@@ -119,7 +153,7 @@ namespace ZombieSurvivalGame.Data
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error in loading characters: " + e.Message);
+                throw new Exception("Error in loading characters: " + e.Message);
             }
             return characters;
         }

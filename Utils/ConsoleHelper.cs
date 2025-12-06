@@ -1,11 +1,98 @@
-﻿using ZombieSurvivalGame.Domain;
+﻿using ZombieSurvivalGame.Data;
+using ZombieSurvivalGame.Domain;
+using ZombieSurvivalGame.Model;
 
 namespace ZombieSurvivalGame.Utils
 {
     public class ConsoleHelper
     {
+        CharacterRepository characterRepository;
         public ConsoleHelper()
         {
+            characterRepository = new CharacterRepository();
+        }
+
+        public static void DisplayCreateCharacterHeader()
+        {
+            Console.Clear();
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║          CREATE YOUR CHARACTER         ║");
+            Console.WriteLine("╚════════════════════════════════════════╝\n");
+        }
+
+        public static void ErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        public static void SuccessMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            TypeEffect(message);
+            Console.ResetColor();
+        }
+
+        public void DisplayCharacters(List<Character> characters)
+        {
+            if (characters == null || characters.Count == 0)
+            {
+                ConsoleHelper.TypeEffect("No saved characters found.");
+
+                ConsoleHelper.TypeEffect("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
+            ConsoleHelper.TypeEffect("Select a character:");
+            Console.WriteLine("0. Back");
+            for (int i = 0; i < characters.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {characters[i].Name} - {characters[i].Role}");
+            }
+        }
+
+        public void ShowGameTitle()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            string[] titleArt = new string[]
+            {
+        "██████   ██   ██  ██   ██  ███████  ██   ██      ██████   ███████",
+        "██   ██  ██   ██  ██   ██  ██   ██  ██   ██      ██   ██  ██   ██",
+        "██████   ██   ██  ███████  ███████  ███████      ██████   ███████",
+        "██   ██  ██   ██  ██   ██  ██   ██    ███        ██       ██   ██",
+        "██████   ███████  ██   ██  ██   ██    ███        ██       ██   ██"
+            };
+
+            int width = titleArt.Max(line => line.Length) + 6; // 3 spaces padding each side
+
+            // Top border
+            Console.WriteLine("╔" + new string('═', width) + "╗");
+
+            Console.WriteLine("║" + new string(' ', width) + "║");
+
+            string titleText = "BUHAY PA!";
+            int padding = (width - titleText.Length) / 2;
+            Console.WriteLine("║" + new string(' ', padding) + titleText + new string(' ', width - padding - titleText.Length) + "║");
+
+            Console.WriteLine("║" + new string(' ', width) + "║");
+
+            foreach (var line in titleArt)
+            {
+                string paddedLine = line.PadRight(width - 4); // 2 spaces on each side inside border
+                Console.WriteLine("║  " + paddedLine + "  ║");
+            }
+
+            Console.WriteLine("╚" + new string('═', width) + "╝");
+
+            Console.ResetColor();
+            Console.WriteLine();
+
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         public static void TypeEffect(string message)
@@ -22,17 +109,94 @@ namespace ZombieSurvivalGame.Utils
             Console.WriteLine();
         }
 
-        public void MenuOptions()
+        public int ShowMainMenu()
         {
-            Console.Clear();
-            Console.WriteLine("╔════════════════════════════════════════╗");
-            Console.WriteLine("║                MAIN MENU               ║");
-            Console.WriteLine("╚════════════════════════════════════════╝\n");
-            Console.WriteLine("0. Exit");
-            Console.WriteLine("1. New Game");
-            Console.WriteLine("2. Load Game");
-            Console.WriteLine("3. Campaign Mode");
-            Console.WriteLine("4. Credits");
+            string[] options = { "Character Management", "Campaign Mode", "Credits", "Exit" };
+            int selectedIndex = 0;
+            ConsoleKey key;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════╗");
+                Console.WriteLine("║                MAIN MENU               ║");
+                Console.WriteLine("╚════════════════════════════════════════╝\n");
+
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (i == selectedIndex)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"> {options[i]}"); // Highlighted selection
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  {options[i]}");
+                    }
+                }
+
+                key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.UpArrow)
+                {
+                    selectedIndex--;
+                    if (selectedIndex < 0) selectedIndex = options.Length - 1;
+                }
+                else if (key == ConsoleKey.DownArrow)
+                {
+                    selectedIndex++;
+                    if (selectedIndex >= options.Length) selectedIndex = 0;
+                }
+
+            } while (key != ConsoleKey.Enter);
+
+            return selectedIndex;
+        }
+
+        public int ShowCharacterManagementOptions()
+        {
+            string[] options = { "Create Character", "Load Character", "Delete Character", "Back" };
+            int selectedIndex = 0;
+            ConsoleKey key;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("╔════════════════════════════════════════╗");
+                Console.WriteLine("║          CHARACTER MANAGEMENT          ║");
+                Console.WriteLine("╚════════════════════════════════════════╝\n");
+
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (i == selectedIndex)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"> {options[i]}"); // Highlighted selection
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  {options[i]}");
+                    }
+                }
+
+                key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.UpArrow)
+                {
+                    selectedIndex--;
+                    if (selectedIndex < 0) selectedIndex = options.Length - 1;
+                }
+                else if (key == ConsoleKey.DownArrow)
+                {
+                    selectedIndex++;
+                    if (selectedIndex >= options.Length) selectedIndex = 0;
+                }
+
+            } while (key != ConsoleKey.Enter);
+
+            return selectedIndex;
         }
 
         // age
@@ -436,15 +600,12 @@ namespace ZombieSurvivalGame.Utils
         }
 
         // stealth perks
-        public void StealthOptions(string role)
+        public void StealthOptions()
         {
             Console.WriteLine("========== CHARACTER CREATION ==========");
-            if (role.Equals("Human"))
+            for (int i = 0; i < CharacterParts.IsStealthy.Length; i++)
             {
-                for (int i = 0; i < CharacterParts.IsStealthy.Length; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {CharacterParts.IsStealthy[i]}");
-                }
+                Console.WriteLine($"{i + 1}. {CharacterParts.IsStealthy[i]}");
             }
         }
     }
